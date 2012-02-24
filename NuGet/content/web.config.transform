@@ -2,6 +2,11 @@
 	<appSettings>
 		<add key="CookieRestrictions.ValidHostnames" value=""/>
 	</appSettings>
+	<system.web>
+		<httpModules>
+			<add type="CookieRestrictions.HttpModules.CookieRestrictionModule, CookieRestrictions" name="CookieRestrictionsModule" />
+		</httpModules>
+	</system.web>
 	<system.webServer>
 		<modules>
 			<add type="CookieRestrictions.HttpModules.CookieRestrictionModule, CookieRestrictions" name="CookieRestrictionsModule"/>

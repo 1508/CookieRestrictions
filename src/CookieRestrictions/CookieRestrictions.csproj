@@ -32,20 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="businesslogic">
-      <HintPath>..\Lib\businesslogic.dll</HintPath>
-    </Reference>
-    <Reference Include="cms">
-      <HintPath>..\Lib\cms.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions">
-      <HintPath>..\Lib\System.Web.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="umbraco">
-      <HintPath>..\Lib\umbraco.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CookieRestrictionsConfig.cs" />
