@@ -26,6 +26,15 @@ namespace CookieRestrictions
 
         public static bool AllowingCookies()
         {
+            if (HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesAllowedKey] != null && HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesAllowedKey] == "on")
+            {
+                return true;
+            }
+            if (HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesNotAllowedkey] != null && HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesNotAllowedkey] == "on")
+            {
+                return false;
+            }
+
             HttpCookie httpCookie = HttpContext.Current.Request.Cookies.Get(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
             if (httpCookie == null)
                 return false;

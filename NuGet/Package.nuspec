@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>CookieRestrictions</id>
-		<version>1.0.0.2</version>
+		<version>1.0.0.3</version>
 		<authors>Ole Thorsager @ 1508.dk</authors>
 		<owners>1508 A/S</owners>
 		<licenseUrl>http://creativecommons.org/licenses/by/3.0/</licenseUrl>
@@ -20,6 +20,7 @@
 			- The javascript is placed in \resources\js\CookieRestrictions.js and must be included manualy if needed
 		</description>
 		<releaseNotes>
+			Version 1.0.0.3 - Fixed allow cookie validation in util class.
 			Version 1.0.0.2 - Added a util class
 			Version 1.0.0.1 - added the CookieRestrictionsContext.HostnameIsValid property so its easier to check if the javascript should be included</releaseNotes>
 		<copyright>http://creativecommons.org/licenses/by/3.0/</copyright>
