@@ -35,13 +35,16 @@ function clearCookies() {
 			if (name == 'allowCookies' && value == 'on') {
 				allowCookies = true;
 			}
-
+			if (name == 'allowCookie' && value == 'off') {
+			    continue;
+			}
+			    
 			cookieNames.push(name);
 		}
 	}
 
 	if (!allowCookies) {
-		for (var i = 0; i < cookieNames.length; i++) {
+	    for (var i = 0; i < cookieNames.length; i++) {
 			eraseCookie(cookieNames[i]);
 			eraseCookie(cookieNames[i], '.' + window.location.hostname);
 		}

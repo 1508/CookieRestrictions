@@ -35,6 +35,14 @@ namespace CookieRestrictions.Configuration
             }
         }
 
+        public string RememberKey
+        {
+            get
+            {
+                return "remember";
+            }
+        }
+
         private List<string> validHostnames = null;
         public List<string> ValidHostnames
         {
