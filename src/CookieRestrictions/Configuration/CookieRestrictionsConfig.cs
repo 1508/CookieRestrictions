@@ -6,7 +6,9 @@ namespace CookieRestrictions.Configuration
     public class CookieRestrictionsConfig
     {
         private static CookieRestrictionsConfig instance = null;
-        public static CookieRestrictionsConfig Instance 
+
+        private bool? _disabled;
+        public static CookieRestrictionsConfig Instance
         {
             get
             {
@@ -43,7 +45,32 @@ namespace CookieRestrictions.Configuration
             }
         }
 
+        public bool IsDisabled
+        {
+            get
+            {
+                if (this._disabled.HasValue)
+                {
+                    return this._disabled.Value;
+                }
+
+                string sDisabled = WebConfigurationManager.AppSettings.Get("CookieRestrictions.Disabled");
+
+                bool disabled;
+                if (!bool.TryParse(sDisabled, out disabled))
+                {
+                    disabled = false;
+                }
+
+                this._disabled = disabled;
+
+                return this._disabled.Value;
+            }
+        }
+
         private List<string> validHostnames = null;
+        private string _javascriptLocation;
+
         public List<string> ValidHostnames
         {
             get
@@ -64,6 +91,26 @@ namespace CookieRestrictions.Configuration
                 }
 
                 return validHostnames;
+            }
+        }
+
+        public string JavascriptLocation
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this._javascriptLocation))
+                {
+                    string location = WebConfigurationManager.AppSettings.Get("CookieRestrictions");
+
+                    if (string.IsNullOrEmpty(location))
+                    {
+                        location = "/resources/js/CookieRestrictions.js";
+                    }
+
+                    this._javascriptLocation = location;
+                }
+
+                return this._javascriptLocation;
             }
         }
     }

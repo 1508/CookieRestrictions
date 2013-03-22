@@ -16,7 +16,11 @@ namespace CookieRestrictions.HttpModules
 
         public void Init(HttpApplication context)
         {
-            context.EndRequest += new EventHandler(context_EndRequest);            
+            if (!CookieRestrictionsConfig.Instance.IsDisabled)
+            {
+                context.EndRequest += new EventHandler(context_EndRequest);                
+            }
+            
         }
 
         void context_EndRequest(object sender, EventArgs e)
