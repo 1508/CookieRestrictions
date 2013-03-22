@@ -36,7 +36,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\CookieRestrictionsConfig.cs" />
+    <Compile Include="Configuration\Config.cs" />
+    <Compile Include="Configuration\DefaultConfiguration.cs" />
+    <Compile Include="Configuration\ICookieRestrictionsConfig.cs" />
     <Compile Include="Context\CookieRestrictionsContext.cs" />
     <Compile Include="HtmlUtil.cs" />
     <Compile Include="HttpModules\CookieRestrictionModule.cs" />

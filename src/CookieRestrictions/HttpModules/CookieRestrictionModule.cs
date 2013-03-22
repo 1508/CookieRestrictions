@@ -9,47 +9,49 @@ namespace CookieRestrictions.HttpModules
     {
         #region IHttpModule Members
 
-        public void Dispose() 
+        public void Dispose()
         {
-            
+
         }
 
         public void Init(HttpApplication context)
         {
-            if (!CookieRestrictionsConfig.Instance.IsDisabled)
-            {
-                context.EndRequest += new EventHandler(context_EndRequest);                
-            }
-            
+            context.EndRequest += new EventHandler(context_EndRequest);
+
+
         }
 
         void context_EndRequest(object sender, EventArgs e)
         {
-            if(HttpContext.Current == null || HttpContext.Current.Request == null)
+            if (Config.Instance.IsDisabled)
             {
                 return;
             }
-            
+            if (HttpContext.Current == null || HttpContext.Current.Request == null)
+            {
+                return;
+            }
+
             if (!CookieRestrictionsContext.Instance.HostnameIsValid)
             {
                 // The javascript should also not be rendered in this case (a workaound could be to set the allowCookies cookie for the current session and allow the script to be called anyway, but its cleaner not to render it at all)
                 return;
             }
-            
+
             // Get or Set the cookies allowed cookie
-            bool disallowCookiesOn = GetRequestVar(CookieRestrictionsConfig.Instance.CookiesAllowedKey) == "off" 
-                || GetRequestVar(CookieRestrictionsConfig.Instance.CookiesNotAllowedkey) == "on"; // Keeped for backward compatibility
+            bool disallowCookiesOn = GetRequestVar(Config.Instance.CookiesAllowedKey) == "off"
+                || GetRequestVar(Config.Instance.CookiesNotAllowedkey) == "on"; // Keeped for backward compatibility
 
-            bool allowCookiesOn = GetRequestVar(CookieRestrictionsConfig.Instance.CookiesAllowedKey) == "on";
+            bool allowCookiesOn = GetRequestVar(Config.Instance.CookiesAllowedKey) == "on";
 
-            HttpCookie allowCookie = HttpContext.Current.Request.Cookies.Get(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
+            HttpCookie allowCookie = HttpContext.Current.Request.Cookies.Get(Config.Instance.CookiesAllowedKey);
             if (allowCookie == null && allowCookiesOn && !disallowCookiesOn)
             {
-                HttpContext.Current.Response.Cookies.Remove(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
-                HttpContext.Current.Response.Cookies.Add(new HttpCookie(CookieRestrictionsConfig.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
+                HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
                 return;
             }
-            
+
             // Return if cookies are allowed
             if (allowCookie != null && allowCookie.Value == "on" && !disallowCookiesOn)
             {
@@ -59,12 +61,12 @@ namespace CookieRestrictions.HttpModules
 
             if (allowCookie != null && allowCookie.Value != "on" && !disallowCookiesOn)
             {
-                HttpContext.Current.Response.Cookies.Remove(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
-                HttpContext.Current.Response.Cookies.Add(new HttpCookie(CookieRestrictionsConfig.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
-   
+                HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
+
                 return;
-            }                        
-            
+            }
+
 
             // Otherwise
             // Clear all cookies currently set
@@ -89,30 +91,30 @@ namespace CookieRestrictions.HttpModules
             }
 
             // Do we remember the not allowed state ?
-            var rememberRequest = GetRequestVar(CookieRestrictionsConfig.Instance.RememberKey);
+            var rememberRequest = GetRequestVar(Config.Instance.RememberKey);
 
             // Allow remembering the not allowcookie
             // if not allready set by querystring
             switch (rememberRequest)
             {
                 case "on":
-                    HttpContext.Current.Response.Cookies.Remove(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
-                    HttpContext.Current.Response.Cookies.Add(new HttpCookie(CookieRestrictionsConfig.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true});
+                    HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
+                    HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true });
                     break;
                 case "off":
-                    HttpContext.Current.Response.Cookies.Remove(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
+                    HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
                     break;
-                default :
+                default:
                     //find state value if cookie was remembered 
-                    HttpCookie memory = HttpContext.Current.Request.Cookies.Get(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
+                    HttpCookie memory = HttpContext.Current.Request.Cookies.Get(Config.Instance.CookiesAllowedKey);
                     if (memory != null)
                     {
                         if (memory.Value == "off") // Denied Cookie marked for remembering save state to next load
                         {
-                            HttpContext.Current.Response.Cookies.Remove(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
-                            HttpContext.Current.Response.Cookies.Add(new HttpCookie(CookieRestrictionsConfig.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true });
+                            HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
+                            HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true });
                         }
-                    }    
+                    }
                     break;
             }
         }

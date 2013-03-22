@@ -8,8 +8,8 @@ namespace CookieRestrictions
     {
         public static void AllowCookies()
         {
-            HttpContext.Current.Response.Cookies.Remove(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
-            HttpContext.Current.Response.Cookies.Add(new HttpCookie(CookieRestrictionsConfig.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
+            HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
+            HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
         }
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace CookieRestrictions
         /// <param name="remember"></param>
         public static void DisallowCookies(bool remember = false)
         {
-            HttpCookie httpCookie = HttpContext.Current.Request.Cookies.Get(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
+            HttpCookie httpCookie = HttpContext.Current.Request.Cookies.Get(Config.Instance.CookiesAllowedKey);
             if (httpCookie == null)
             {
                 if (remember == false)
@@ -27,7 +27,7 @@ namespace CookieRestrictions
                 }
 
                 // remember true and no prior cookie
-                HttpContext.Current.Response.Cookies.Add(new HttpCookie(CookieRestrictionsConfig.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true });
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true });
                 return;
             }
             
@@ -53,18 +53,21 @@ namespace CookieRestrictions
         /// <returns></returns>
         public static bool AllowingCookies()
         {
-            if (HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesAllowedKey] != null 
-                && HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesAllowedKey] == "on")
+            if (Config.Instance.IsDisabled)
+                return true;
+
+            if (HttpContext.Current.Request.QueryString[Config.Instance.CookiesAllowedKey] != null 
+                && HttpContext.Current.Request.QueryString[Config.Instance.CookiesAllowedKey] == "on")
             {
                 return true;
             }
-            if (HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesNotAllowedkey] != null 
-                && HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesNotAllowedkey] == "on")
+            if (HttpContext.Current.Request.QueryString[Config.Instance.CookiesNotAllowedkey] != null 
+                && HttpContext.Current.Request.QueryString[Config.Instance.CookiesNotAllowedkey] == "on")
             {
                 return false;
             }
 
-            HttpCookie httpCookie = HttpContext.Current.Request.Cookies.Get(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
+            HttpCookie httpCookie = HttpContext.Current.Request.Cookies.Get(Config.Instance.CookiesAllowedKey);
             if (httpCookie == null)
                 return false;
             
@@ -78,10 +81,10 @@ namespace CookieRestrictions
         public static bool SuppressingCookiesDisclaimer()
         {
 
-            if (HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesAllowedKey] != null
-                && HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.CookiesAllowedKey] == "off")
+            if (HttpContext.Current.Request.QueryString[Config.Instance.CookiesAllowedKey] != null
+                && HttpContext.Current.Request.QueryString[Config.Instance.CookiesAllowedKey] == "off")
             {
-                if (HttpContext.Current.Request.QueryString[CookieRestrictionsConfig.Instance.RememberKey] == "on")
+                if (HttpContext.Current.Request.QueryString[Config.Instance.RememberKey] == "on")
                 {
                     return true;
                 }
@@ -89,7 +92,7 @@ namespace CookieRestrictions
                 return false;
             }
 
-            HttpCookie httpCookie = HttpContext.Current.Request.Cookies.Get(CookieRestrictionsConfig.Instance.CookiesAllowedKey);
+            HttpCookie httpCookie = HttpContext.Current.Request.Cookies.Get(Config.Instance.CookiesAllowedKey);
             if (httpCookie == null)
             {
                 return false;

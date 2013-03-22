@@ -23,7 +23,7 @@ namespace CookieRestrictions.Context
             get
             {
                 string hostname = HttpContext.Current.Request.ServerVariables["SERVER_NAME"];
-                if (string.IsNullOrEmpty(hostname) || (CookieRestrictionsConfig.Instance.ValidHostnames.Count > 0 && !CookieRestrictionsConfig.Instance.ValidHostnames.Contains(hostname)))
+                if (string.IsNullOrEmpty(hostname) || (Config.Instance.ValidHostnames.Count > 0 && !Config.Instance.ValidHostnames.Contains(hostname)))
                     return false;
 
                 return true;

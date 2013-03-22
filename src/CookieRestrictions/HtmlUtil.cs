@@ -8,11 +8,11 @@ namespace CookieRestrictions
     {
         public static string RenderJavascript()
         {
-            if (Configuration.CookieRestrictionsConfig.Instance.IsDisabled)
+            if (Configuration.Config.Instance.IsDisabled || CookieUtil.AllowingCookies())
                 return string.Empty;
 
             return string.Format("<script type=\"text/javascript\" src=\"{0}\"></script>",
-                                 Configuration.CookieRestrictionsConfig.Instance.JavascriptLocation);
+                                 Configuration.Config.Instance.JavascriptLocation);
         }
     }
 }

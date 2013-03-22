@@ -3,23 +3,11 @@ using System.Web.Configuration;
 
 namespace CookieRestrictions.Configuration
 {
-    public class CookieRestrictionsConfig
+    public class DefaultConfiguration : ICookieRestrictionsConfig
     {
-        private static CookieRestrictionsConfig instance = null;
-
+        private List<string> validHostnames = null;
+        private string _javascriptLocation;
         private bool? _disabled;
-        public static CookieRestrictionsConfig Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new CookieRestrictionsConfig();
-                }
-
-                return instance;
-            }
-        }
 
         public string CookiesNotAllowedkey
         {
@@ -68,9 +56,6 @@ namespace CookieRestrictions.Configuration
             }
         }
 
-        private List<string> validHostnames = null;
-        private string _javascriptLocation;
-
         public List<string> ValidHostnames
         {
             get
@@ -100,7 +85,7 @@ namespace CookieRestrictions.Configuration
             {
                 if (string.IsNullOrEmpty(this._javascriptLocation))
                 {
-                    string location = WebConfigurationManager.AppSettings.Get("CookieRestrictions");
+                    string location = WebConfigurationManager.AppSettings.Get("CookieRestrictions.JavascriptLocation");
 
                     if (string.IsNullOrEmpty(location))
                     {
