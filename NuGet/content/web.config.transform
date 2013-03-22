@@ -3,6 +3,7 @@
 		<add key="CookieRestrictions.ValidHostnames" value=""/>
 		<add key="CookieRestrictions.JavascriptLocation" value="/resources/js/CookieRestrictions.js"/>
 		<add key="CookieRestrictions.Disabled" value="false"/>
+		<add key="CookieRestrictions.ConfigurationType" value="CookieRestrictions.Configuration.DefaultConfiguration, CookieRestrictions" />
 	</appSettings>
 	<system.web>
 		<httpModules>
