@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>CookieRestrictions</id>
-		<version>1.0.0.5</version>
+		<version>1.0.0.6</version>
 		<authors>Ole Thorsager @ 1508.dk</authors>
 		<owners>1508 A/S</owners>
 		<licenseUrl>http://creativecommons.org/licenses/by/3.0/</licenseUrl>
@@ -11,16 +11,18 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<summary>Can disable/enable cookies on a website</summary>
 		<description>
-			By adding the queryparameter allowCookies=on or disallowCookies=on cookies will be disabled or enabled.
+			By adding the queryparameter allowCookies=on or allowCookies=off cookies will be disabled or enabled.
 			(cookis are enabled by setting an allowCookies cookie with the value "on")
-			
+
 			- On the server side a http-module attached to the ResponseEnd event will clear all cookies if they are not enabled
-			- On the client side a javascript will wait 1200 milliseconds before clearing all cookies which may have been set via 3rd party javascript includes (such as google analytics)			
+			- On the client side a javascript will wait 1200 milliseconds before clearing all cookies which may have been set via 3rd party javascript includes (such as google analytics)
 			- The HttpModule can be configured to work on a limited number of hostnames, just add them as a comma separated list in the app-setting "CookieRestrictions.ValidHostnames"
 			- The javascript is placed in \resources\js\CookieRestrictions.js and must be included manualy if needed
 		</description>
 		<releaseNotes>
-      Version 1.0.0.5 - Implementet so the configuration can be overwriten
+			Version 1.0.0.6 - Fixed Cookies from httpOnly true to false, and a typo in js
+			Version 1.0.0.5 - Implementet so the configuration can be overwriten
+			Version 1.0.0.4 - Implemented surpress cookie warning.
 			Version 1.0.0.3 - Fixed allow cookie validation in util class.
 			Version 1.0.0.2 - Added a util class
 			Version 1.0.0.1 - added the CookieRestrictionsContext.HostnameIsValid property so its easier to check if the javascript should be included</releaseNotes>
