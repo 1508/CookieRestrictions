@@ -9,7 +9,7 @@ namespace CookieRestrictions
         public static void AllowCookies()
         {
             HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
-            HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
+            HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = false});
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace CookieRestrictions
                 }
 
                 // remember true and no prior cookie
-                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true });
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = false});
                 return;
             }
             

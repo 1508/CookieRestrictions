@@ -48,7 +48,7 @@ namespace CookieRestrictions.HttpModules
             if (allowCookie == null && allowCookiesOn && !disallowCookiesOn)
             {
                 HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
-                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = false });
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace CookieRestrictions.HttpModules
             if (allowCookie != null && allowCookie.Value != "on" && !disallowCookiesOn)
             {
                 HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
-                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = true });
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "on") { Expires = DateTime.MaxValue, HttpOnly = false });
 
                 return;
             }
@@ -99,7 +99,7 @@ namespace CookieRestrictions.HttpModules
             {
                 case "on":
                     HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
-                    HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true });
+                    HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = false });
                     break;
                 case "off":
                     HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
@@ -112,7 +112,7 @@ namespace CookieRestrictions.HttpModules
                         if (memory.Value == "off") // Denied Cookie marked for remembering save state to next load
                         {
                             HttpContext.Current.Response.Cookies.Remove(Config.Instance.CookiesAllowedKey);
-                            HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = true });
+                            HttpContext.Current.Response.Cookies.Add(new HttpCookie(Config.Instance.CookiesAllowedKey, "off") { Expires = DateTime.MaxValue, HttpOnly = false });
                         }
                     }
                     break;

@@ -35,7 +35,7 @@ function clearCookies() {
 			if (name == 'allowCookies' && value == 'on') {
 				allowCookies = true;
 			}
-			if (name == 'allowCookie' && value == 'off') {
+			if (name == 'allowCookies' && value == 'off') {
 			    continue;
 			}
 			    
