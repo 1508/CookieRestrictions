@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>CookieRestrictions</id>
-		<version>1.0.0.6</version>
+		<version>1.0.0.7</version>
 		<authors>Ole Thorsager @ 1508.dk</authors>
 		<owners>1508 A/S</owners>
 		<licenseUrl>http://creativecommons.org/licenses/by/3.0/</licenseUrl>
@@ -20,6 +20,7 @@
 			- The javascript is placed in \resources\js\CookieRestrictions.js and must be included manualy if needed
 		</description>
 		<releaseNotes>
+			Version 1.0.0.7 - Silent Handling of not being able to change cookies in request due to Flushed request content 
 			Version 1.0.0.6 - Fixed Cookies from httpOnly true to false, and a typo in js
 			Version 1.0.0.5 - Implementet so the configuration can be overwriten
 			Version 1.0.0.4 - Implemented surpress cookie warning.
