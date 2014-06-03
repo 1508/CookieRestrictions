@@ -141,7 +141,7 @@ namespace CookieRestrictions.HttpModules
             catch (System.Web.HttpException httpException)
             {
                 // Ignore requests where a flush has destroyed to ability to change the cookie headers in the final request handler. 
-                if (!httpException.Message.Contains("Server cannot modify cookies after HTTP headers have been sent."))
+                if (httpException.ErrorCode != -2147467259)
                 {
                     // Throw any thing else up the chain
                     throw;
